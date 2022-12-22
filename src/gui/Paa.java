@@ -81,21 +81,22 @@ public class Paa extends Application{
     //Button forget = new Button("Forgot password?");
     Text txt = new Text("Username");
     Text txt1 = new Text("Password");
-    TextField tf = new TextField();
-    PasswordField tf1;
-    TextField tf2 = new TextField();
+    static TextField tf = new TextField();
+    static PasswordField tf1;
+    static TextField tf2 = new TextField();
 
 
 
 
     //Start method
     @Override
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage)  {
 
 
         Files fil = new Files();
         fil.Userfiless();
         fil.Taskfiles();
+        fil.DeleteFiles();
         stage.setTitle("Use an Account");              //set the title of the stage
 
         //font properties

@@ -15,15 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import jdk.jfr.TransitionFrom;
 
@@ -33,19 +35,23 @@ import java.util.HashMap;
 public class login implements EventHandler {
     TextField t = new TextField();
     PasswordField t1 = new PasswordField();
-    Stage stage;
+    static Stage stage;
     Scene scn;
     static SplitPane sp = new SplitPane();
     static SplitPane sp2 = new SplitPane();
     int count=0;
     static String a = "";
+
     Button view = new Button("View tasks");
+    static Button task2;
     Image plus = new Image(getClass().getResourceAsStream("plus.png"));
     Image bcd = new Image(getClass().getResourceAsStream("bck.jpg"));
+    static Text et = new Text(" CREATE TO SHOW");
     ImageView plusview = new ImageView(plus);
     ImageView bcdview = new ImageView(bcd);
-    static StackPane vb2 = new StackPane();
-    static StackPane vb3 = new StackPane();
+    static AnchorPane vb2 = new AnchorPane();
+    static AnchorPane vb3 = new AnchorPane();
+    Rectangle bac = new Rectangle();
     //MenuBar bar = new MenuBar();
     static HBox hb;
 
@@ -89,6 +95,8 @@ public class login implements EventHandler {
                         Text text = new Text();
                         Text text1 = new Text();
                         Text text2 = new Text();
+                        Text heading = new Text("Tasks:");
+                        heading.setFont(Font.font("Gill Sans", FontWeight.BOLD,15));
                         text.setFill(Color.WHITE);
                         text.setFont(Font.font("Gill Sans", FontWeight.BOLD, 20));
 
@@ -102,18 +110,18 @@ public class login implements EventHandler {
                         Button back = new Button("Back");
                         Button task = new Button("+ Create New Task");
                         Button task1 = new Button("My Day");
-                        Button task2 = new Button("Important");
-                        SplitMenuButton task3 = new SplitMenuButton();
-                        task3.setText("Tasks");
+                        task2 = new Button("Trash");
+                        Button searchButt = new Button("Search");
+                        //search.setPromptText("Search");
+
+                        task1.setStyle("-fx-border-color: #8304D6;-fx-background-color: white;-fx-background-radius: 10px;-fx-border-radius: 8px;");
+                        task2.setStyle("-fx-border-color: #8304D6;-fx-background-color: white;-fx-background-radius: 10px;-fx-border-radius: 8px;");
                         task1.setMinHeight(30);
                         task1.setMinWidth(150);
-                        task1.setShape(new Rectangle(7, 10));
+                        //task1.setShape(new Rectangle(7, 10));
                         task2.setMinHeight(30);
                         task2.setMinWidth(150);
-                        task2.setShape(new Rectangle(7, 10));
-                        task3.setMinHeight(30);
-                        task3.setMinWidth(150);
-                        task3.setShape(new Rectangle(7, 10));
+                        //task2.setShape(new Rectangle(7, 10));
                         Button logout = new Button();
                         logout.setText("Logout");
                         logout.setStyle("-fx-background-color: White; -fx-background-radius:10px; -fx-border-color: purple; -fx-border-radius:10px;");
@@ -121,6 +129,10 @@ public class login implements EventHandler {
 
                         //vboxes
                         VBox vb1 = new VBox(back);
+                        vb1.getChildren().add(text);
+
+                        vb1.getChildren().add(searchButt);
+
 
                         DropShadow shadow = new DropShadow();
 
@@ -130,38 +142,55 @@ public class login implements EventHandler {
                         vb1.setMinWidth(150);
                         vb2.setMaxHeight(120);
                         bcdview.setFitHeight(120);
-                        vb1.getChildren().add(text);
+                        //vb1.getChildren().add(text);
                         vb1.getChildren().add(task);
                         vb1.getChildren().add(text1);
                         vb1.getChildren().add(text2);
-
                         vb1.getChildren().add(task1);
                         vb1.setFillWidth(true);
                         vb1.getChildren().add(task2);
-                        vb1.getChildren().add(task3);
-                        vb2.getChildren().add(bcdview);
-                        AnchorPane log = new AnchorPane();
+                        vb1.getChildren().add(heading);
+                        HBox log = new HBox();
                         log.getChildren().add(logout);
-                        log.setLayoutX(200);
+                        log.setLayoutX(420);
                         log.setLayoutY(0.5);
+                        log.setAlignment(Pos.TOP_RIGHT);
                         vb2.getChildren().add(log);
-                        Text et = new Text(" CREATE TO SHOW");
                         et.setFont(Font.font("Gill Sans", FontWeight.BOLD, 25));
                         hb = new HBox(et);
                         hb.setAlignment(Pos.BOTTOM_LEFT);
-                        et.setFill(Color.WHITE);
                         vb2.getChildren().add(hb);
+                        et.setFill(Color.WHITE);
+
+                        vb2.setStyle("-fx-background-color:#8C2FE8;");
+                        VBox rect = new VBox(bac);
+                        rect.setLayoutX(0.5);
+                        rect.setLayoutY(150);
+                        vb3.getChildren().add(rect);
+
+
+                        bac.setStroke(Color.rgb(117,34,215));
+                        bac.setStrokeLineCap(StrokeLineCap.ROUND);
+                        bac.setStrokeLineJoin(StrokeLineJoin.BEVEL);
+                        bac.setStrokeType(StrokeType.OUTSIDE);
+                        bac.setStrokeWidth(2);
+                        bac.setWidth(370);
 
 
                         shadow.setColor(Color.PALEGREEN);
 
                         task.setStyle("-fx-background-color: White; -fx-background-radius:20px; -fx-border-color: purple; -fx-border-radius:18px;");
-                        task1.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
-                        task2.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
-                        task3.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
+                        searchButt.setStyle("-fx-background-color: #7522d7;-fx-background-radius:20px; -fx-border-color: purple; -fx-border-radius:18px;");
+                        //task1.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
+                        //task2.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
+                        //task3.setStyle("-fx-background-color: White;  -fx-border-color: purple; ");
                         task.setEffect(shadow);
+                        searchButt.setEffect(shadow);
                         task.setMinHeight(30);
                         task.setMinWidth(150);
+                        searchButt.setMinHeight(30);
+                        searchButt.setMinWidth(150);
+
 
                         //split adding
                         sp2.getItems().addAll(vb2, vb3);
@@ -185,24 +214,46 @@ public class login implements EventHandler {
                         task.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                Task t = new Task(scn1, vb1, task3);
+                                Task t = new Task(scn1, vb1, searchButt);
                                 t.handle();
                             }
                         });
+
+
+                        searchButt.setOnAction(new search(stage,scn1));
                         for (HashMap<String, Object> k : AddingTask.tasks) {
                             System.out.println("entered into the loop");
                             if (k.get("username").equals(l.get("username"))) {
 
                                 String a = (String) k.get("task");
                                 String b = (String)k.get("description");
+                                String c = (String)k.get("date");
 
-                                Buttonadd ad = new Buttonadd(vb1, a,b);
+                                Buttonadd ad = new Buttonadd(vb1, a,b,c);
                                 ad.but();
                                 hb.getChildren().remove(et);
-                                ad.action();
 
                             }
                         }
+
+
+                        logout.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                stage.close();
+//                                stage.setScene(scn);
+//
+//                                Paa.tf.setText("");
+//                                Paa.tf1.setText("");
+//                                Paa.tf2.setText("");
+//                                stage.setTitle("Use an Account");
+
+                            }
+                        });
+
+
+
+                        task1.setOnAction(new MyDay());
                         stage.setScene(scn1);
                         stage.show();
                         break;

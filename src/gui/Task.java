@@ -18,13 +18,13 @@ public class Task{
         //Task managing
         Scene scn2;
         Stage stage;
-        VBox vb1;
-        SplitMenuButton task3;
+        VBox vb1 = new VBox();
+        Button task3;
     Image img = new Image(getClass().getResourceAsStream("bck.jpg"));
     ImageView imageView = new ImageView(img);
 
         //constructor
-        public Task(Scene scn, VBox vb1, SplitMenuButton task3) {
+        public Task(Scene scn, VBox vb1, Button task3) {
 
         this.scn2 = scn;
         this.vb1 = vb1;
@@ -71,17 +71,24 @@ public class Task{
             stack.getChildren().add(imageView);
             stack.getChildren().add(b);
 
-    //        backk.setStyle("-fx-background-color:green;");
-    //        backk.setTextFill(Color.WHITE);
-    //
 
-            add.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    AddingTask add = new AddingTask(stage1,scn2,Taskextend.des,Taskextend.task,date,vb1,task3);
-                    add.handle();
-                }
-            });
+
+
+                //        backk.setStyle("-fx-background-color:green;");
+                //        backk.setTextFill(Color.WHITE);
+                //
+
+                add.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        if (Taskextend.task==null) {
+                           Taskextend.task.setStyle("-fx-background-color: red;");
+                        } else {
+                            AddingTask add = new AddingTask(stage1, scn2, Taskextend.des, Taskextend.task, date, vb1, task3);
+                            add.handle();
+                        }
+                    }
+                });
 
             //back button
             cancel.setOnAction(new EventHandler<ActionEvent>() {

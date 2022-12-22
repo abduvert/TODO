@@ -28,7 +28,8 @@ public class AddingTask{
     Scene scn;
     TextField task = new TextField();
     DatePicker date;
-    VBox vb1;
+    VBox vb1=new VBox();
+    String datee[];
 
     static ArrayList<HashMap<String,Object>> tasks = new ArrayList<>();
     static HashMap<String, Object> taskName = new HashMap<>();
@@ -36,14 +37,15 @@ public class AddingTask{
     static ArrayList<LocalDate> dat = new ArrayList<>();
 
     TextArea des = new TextArea();
-    SplitMenuButton task3;
+    Button task3;
     static int count=0;
-    String a;
-    String b;
+    static String a;
+    static String b;
+    static String c;
 
 
 
-    public AddingTask(Stage stage1,Scene scn, TextArea des ,TextField task, DatePicker date, VBox vb1,SplitMenuButton task3){
+    public AddingTask(Stage stage1,Scene scn, TextArea des ,TextField task, DatePicker date, VBox vb1,Button task3){
 
         this.stage1 = stage1;
         this.scn = scn;
@@ -61,6 +63,12 @@ public class AddingTask{
         this.task = task;
         this.des = des;
     }
+//    public AddingTask(Text task, des)
+//    {
+//
+//        this.task = task;
+//        this.des = des;
+//    }
 
     public AddingTask(){}
 
@@ -76,6 +84,7 @@ public class AddingTask{
                 taskName.put("task", task.getText());
                 taskName.put("description", des.getText());
                 taskName.put("username", login.a);
+                taskName.put("date", date.getValue());
 
                 tasks.add(taskName);
                 System.out.println(usernames);
@@ -85,7 +94,7 @@ public class AddingTask{
                 for(HashMap<String,Object> l : tasks) {
 
                         count++;
-                        fw.write(l.get("username") + "@" + l.get("task") + "_" + l.get("description") + "\n");
+                        fw.write(l.get("username") + "@" + l.get("task") + "_" + l.get("description") +"]"+ l.get("date")+"\n");
 
 
                 }
@@ -97,9 +106,10 @@ public class AddingTask{
                      b = (String)k.get("description");
 
 
+
                 }
 
-                    Buttonadd ad = new Buttonadd(vb1,a,b);
+                    Buttonadd ad = new Buttonadd(vb1,a,b,c);
                     ad.but();
 
             fw.close();
